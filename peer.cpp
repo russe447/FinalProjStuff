@@ -15,14 +15,14 @@ using namespace std;
 
 class peer {
     public:
-    int socket;
+    int sock;
     int port;
-    char * address;
+    string address;
     bool choked;
     bool interested;
     int peer_id;
 
-    sock(int id) {
+    peer(int id) {
         socket = -1;
         port = 0;
         address = "";
@@ -31,22 +31,22 @@ class peer {
         peer_id = id;
     }
     // Initializes the peer information
-    bool setup(char *address, int p) {
+    bool setup(string addr, int p) {
         if (sock == -1) {
 
             sock = socket(AF_INET, SOCK_STREAM, 0);
             if (sock == -1) {
-                cout << "Socket failed" << edl;
+                cout << "Socket failed\n";
                 return false;
             }
         }   
         sockaddr_in h;
         h.sin_family = AF_INET;
         h.sin_port = htons(port);
-        inet_pton(AF_INET, address.c_str(), &h.sin_addr);
+        inet_pton(AF_INET, addr.c_str(), &h.sin_addr);
 
         port = p;
-        this.address = address;
+        address = addr;
         int conn = connect(sock, (sockaddr*)&h, sizeof(h));
         if (conn == -1) {
             return false;
@@ -57,8 +57,8 @@ class peer {
     bool Send(string data) {
         if (sock != -1) {
 
-            if (send(sock, data.c_str(), strlen(data), 0 ) < 0) {
-                cout << "Sending failed : " << data << endl;
+            if (send(sock, data.c_str(), strlen(data.c_str()), 0 ) < 0) {
+                cout << "Sending failed : " << data << "\n";
                 return false;
             }
         }
@@ -74,7 +74,7 @@ class peer {
 
         string reply;
         if (recv(sock, buff, size, 0) < 0) {
-            cout << "receive failed" << endl;
+            cout << "receive failed\n";
             return nullptr;
         }
         buffer[size-1] = '\0';
@@ -87,7 +87,7 @@ class peer {
         string reply;
         while (buffer[0] != '\n' && buffer[0] != '\0') {
             if (recv(sock, buffer, sizeof(buffer), 0) < 0) {
-                cout << "receive failed" << endl;
+                cout << "receive failed\n";
                 return nullptr;
             }
             reply += buffer[0];
