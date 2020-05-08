@@ -13,7 +13,7 @@
 
 using namespace std;
 
-static class peer {
+class peer {
     public:
     int sock;
     int port;
@@ -23,7 +23,7 @@ static class peer {
     int peer_id;
 
     peer() {
-        socket = -1;
+        sock = -1;
         port = 0;
         address = "";
         choked = true;
