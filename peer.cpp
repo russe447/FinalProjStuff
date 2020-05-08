@@ -71,7 +71,7 @@ class peer {
     // Reads set amount of bytes from recv
     std::string receive(int size) {
         char buff[size];
-        memset(&buffer[0], 0, sizeof(buff));
+        memset(&buff[0], 0, sizeof(buff));
 
         string reply;
         if (recv(sock, buff, size, 0) < 0) {
@@ -84,7 +84,7 @@ class peer {
     }
     // Same as receive but takes it byte-by-byte
     std::string read() {
-        char buffer[1] = 0;
+        char buffer[1] = {0};
         string reply;
         while (buffer[0] != '\n' && buffer[0] != '\0') {
             if (recv(sock, buffer, sizeof(buffer), 0) < 0) {
