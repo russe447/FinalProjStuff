@@ -78,8 +78,8 @@ class peer {
             cout << "receive failed\n";
             return nullptr;
         }
-        buffer[size-1] = '\0';
-        reply = buffer;
+        buff[size-1] = '\0';
+        reply = buff;
         return reply;
     }
     // Same as receive but takes it byte-by-byte
