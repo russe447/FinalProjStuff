@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class peer {
+static class peer {
     public:
     int sock;
     int port;
@@ -22,16 +22,16 @@ class peer {
     bool interested;
     int peer_id;
 
-    peer(int id) {
+    peer() {
         socket = -1;
         port = 0;
         address = "";
         choked = true;
         interested = false;
-        peer_id = id;
+        peer_id = 0;
     }
     // Initializes the peer information
-    bool setup(string addr, int p) {
+    bool setup(string addr, int p, int id) {
         if (sock == -1) {
 
             sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -51,6 +51,7 @@ class peer {
         if (conn == -1) {
             return false;
         }
+        peer_id = id;
         return true;
     }
     // Send data to the socket connection
