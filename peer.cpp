@@ -30,7 +30,7 @@ class peer {
         interested = false;
         peer_id = 0;
     }
-    // Initializes the peer information
+    // Initializes the peer information using the ip, port, and peer id
     bool setup(string addr, int p, int id) {
         if (sock == -1) {
 
@@ -95,9 +95,8 @@ class peer {
         }
         return reply;
     }
-
 };
 
 int main() {
-    
+
 }
